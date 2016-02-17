@@ -9,7 +9,6 @@ function init() {
     });
     refEmail.once('value', function(snapshot) {
         snapshot.forEach(function(snap) {
-            console.log(snap.val());
             var appendParentNode = $("<ul class = 'detials'></ul>");
             var appendChildTimeNode = $("<div class='timestamp'></div> ");
             var appendChildSubNode = $("<li> Subject:<input type = 'text ' class='subject' ></li>")

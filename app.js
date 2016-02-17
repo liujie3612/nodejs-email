@@ -24,8 +24,7 @@ app.use('/', routes);
 ref.on('value', function(snap) {
     var userText = snap.val().Auth.User;
     var passText = snap.val().Auth.Pass;
-
-    //邮件配置
+    var emailObj = snap.val().Email;
     var config_email = {
         host: 'smtp.mxhichina.com',
         port: '25',
@@ -34,20 +33,29 @@ ref.on('value', function(snap) {
             pass: passText
         }
     };
-    var transporter = nodemailer.createTransport(config_email);
-    var mailOptions = {
-        from: userText,
-        to: '1175667160@qq.com',
-        subject: 'Hello world',
-        text: 'Hello world'
-    };
-    transporter.sendMail(mailOptions, function(error, info) {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('Message sent: ' + info.response);
-        }
-    });　
+    if (emailObj != undefined) {
+        for (date in emailObj) {
+            var EmailTo = emailObj[date].To;
+            var EmailSub = emailObj[date].Subject;
+            var EmailText = emailObj[date].Content;
+            var transporter = nodemailer.createTransport(config_email);
+            var mailOptions = {
+                from: userText,
+                to: EmailTo,
+                subject: EmailSub,
+                text: EmailText
+            };
+        };
+        transporter.sendMail(mailOptions, function(error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Message sent: ' + info.response);
+            }
+        });　
+    }
+
+
 });
 
 

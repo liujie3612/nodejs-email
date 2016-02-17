@@ -33,6 +33,7 @@ ref.on('value', function(snap) {
             pass: passText
         }
     };
+    
     if (emailObj != undefined) {
         for (date in emailObj) {
             var EmailTo = emailObj[date].To;
@@ -45,14 +46,15 @@ ref.on('value', function(snap) {
                 subject: EmailSub,
                 text: EmailText
             };
+            transporter.sendMail(mailOptions, function(error, info) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Message sent: ' + info.response);
+                }
+            });　
         };
-        transporter.sendMail(mailOptions, function(error, info) {
-            if (error) {
-                console.log(error);
-            } else {
-                console.log('Message sent: ' + info.response);
-            }
-        });　
+
     }
 
 

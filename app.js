@@ -33,7 +33,7 @@ ref.on('value', function(snap) {
             pass: passText
         }
     };
-    
+
     if (emailObj != undefined) {
         for (date in emailObj) {
             var EmailTo = emailObj[date].To;
@@ -46,33 +46,40 @@ ref.on('value', function(snap) {
                 subject: EmailSub,
                 text: EmailText
             };
-            transporter.sendMail(mailOptions, function(error, info) {
-                if (error) {
-                    console.log(error);
-                } else {
-                    console.log('Message sent: ' + info.response);
-                }
-            });　
+
+            //定时设置
+            /*            //一次
+                        var date = new Date(2016, 1, 17, 21, 59, 0);
+                        var j = schedule.scheduleJob(date, function() {
+                            transporter.sendMail(mailOptions, function(error, info) {
+                                if (error) {
+                                    console.log(error);
+                                } else {
+                                    console.log('Message sent: ' + info.response);
+                                }
+                            });　
+                        });*/
+
+            /*            //周期
+                        var rule = new schedule.RecurrenceRule();
+                        rule.second = 0;
+                        var j = schedule.scheduleJob(rule, function() {
+                            transporter.sendMail(mailOptions, function(error, info) {
+                                if (error) {
+                                    console.log(error);
+                                } else {
+                                    console.log('Message sent: ' + info.response);
+                                }
+                            });　
+                        });*/
+
+
         };
-
     }
-
-
 });
 
 
 
-//定时设置
-var rule = new schedule.RecurrenceRule();
-rule.second = 0;
-//var date = new Date(2016, 1, 16, 15, 48, 0);
-var j = schedule.scheduleJob(rule, function() {
-    console.log('The world is going to end today.');
-});
-/*
-var j = schedule.scheduleJob(date, function () {
-    console.log('The world is going to end today.');
-});
-*/
+
 
 module.exports = app;

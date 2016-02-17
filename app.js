@@ -7,8 +7,8 @@ var hbs = require('hbs');
 var Wilddog = require("wilddog");
 var schedule = require("node-schedule");
 var nodemailer = require('nodemailer');
-
 var routes = require('./routes/index');
+
 var ref = new Wilddog("https://task-management.wilddogio.com");
 var app = express();
 
@@ -39,6 +39,7 @@ ref.on('value', function(snap) {
             var EmailTo = emailObj[date].To;
             var EmailSub = emailObj[date].Subject;
             var EmailText = emailObj[date].Content;
+            var EmailTime = emailObj[date].Time;
             var transporter = nodemailer.createTransport(config_email);
             var mailOptions = {
                 from: userText,
@@ -49,7 +50,8 @@ ref.on('value', function(snap) {
 
             //定时设置
             /*            //一次
-                        var date = new Date(2016, 1, 17, 21, 59, 0);
+                        var date = new Date(2016, 1, 17, 22, 49, 0);
+                        console.log(date);
                         var j = schedule.scheduleJob(date, function() {
                             transporter.sendMail(mailOptions, function(error, info) {
                                 if (error) {
@@ -62,7 +64,7 @@ ref.on('value', function(snap) {
 
             /*            //周期
                         var rule = new schedule.RecurrenceRule();
-                        rule.second = 0;
+                        rule.second = parseInt(emailObj[date].Time);
                         var j = schedule.scheduleJob(rule, function() {
                             transporter.sendMail(mailOptions, function(error, info) {
                                 if (error) {
@@ -71,15 +73,21 @@ ref.on('value', function(snap) {
                                     console.log('Message sent: ' + info.response);
                                 }
                             });　
-                        });*/
+                        });
+            */
 
-
+            //周期
+            var rule = emailObj[date].Time;
+            var j = schedule.scheduleJob(rule, function() {
+                transporter.sendMail(mailOptions, function(error, info) {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        console.log('Message sent: ' + info.response);
+                    }
+                })
+            });
         };
     }
 });
-
-
-
-
-
 module.exports = app;

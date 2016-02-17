@@ -21,8 +21,124 @@ body {
     color: #666666;
 }
 
+.main {
+    margin-bottom: 200px;
+}
+
+input,
+button,
+textarea {
+    outline: none;
+}
+
+ul,
+li {
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    list-style: none;
+}
+
 h1 {
-    font-size: 2em;
+    font-size: 31px;
     margin: 0;
     text-align: center;
+    padding-top: 30px;
+    font-weight: 300;
+}
+
+button {
+    padding: 0;
+    display: inline-block;
+    width: 160px;
+    height: 36px;
+    text-align: center;
+    line-height: 34px;
+    border-radius: 3px;
+    border: 1px solid #cd461e;
+    background-color: transparent;
+    color: #e6501e;
+    border-color: #e6501e;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #f5c3af;
+}
+
+button:focus,
+input:focus {
+    outline: 0;
+}
+
+input:focus,
+textarea:focus {
+    border-color: #66afe9;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+}
+
+input {
+    padding: 0;
+    margin-top: 5px;
+    border: 1px solid rgb( 204, 204, 204);
+    border-radius: 3px;
+    width: 300px;
+    height: 31px;
+    padding-left: 12px;
+    line-height: 31px;
+    color: rgb( 51, 51, 51);
+}
+
+.main > ul {
+    margin-left: 200px;
+}
+
+.account {
+    margin-bottom: 60px;
+    border: 1px solid #ccc;
+    width: 44.6%;
+    border-radius: 6px;
+    padding: 40px;
+}
+
+.title {
+    font-size: 18px;
+}
+
+#confirm {
+    margin-left: 51px;
+    margin-top: 20px;
+}
+
+.detials {
+    padding: 40px;
+    margin-top: 30px;
+    /*margin-bottom: 10px;*/
+    border: 1px solid #ccc;
+    width: 50%;
+    border-radius: 6px;
+}
+
+.detials li {
+    margin-top: 16px;
+    width: 600px;
+}
+
+.detials li input,
+.detials li textarea {
+    display: inline-block;
+    /*float: right;*/
+}
+
+.content {
+    height: 100px;
+    width: 460px;
+    vertical-align: text-top;
+}
+
+.send {
+    margin-left: 51px;
+    margin-top: 20px;
 }

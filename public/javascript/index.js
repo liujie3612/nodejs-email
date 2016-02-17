@@ -7,23 +7,34 @@ function init() {
         $("#user").attr("value", snap.val().User);
         $("#pass").attr("value", snap.val().Pass);
     });
-
     refEmail.on('value', function(snapshot) {
-        var snapshotLength = snapshot.numChildren();
-        console.log(snapshotLength);
-        for (var i = 0; i < snapshotLength; i++) {
-            var appendNode = $("<ul class = 'detials'><div class='timestamp'></div> <li> Subject:<input type = 'text ' class= 'subject' ></li> <li> To: <input type = 'text ' class = 'to ' > </li> <li> Content: <textarea class='content ' > </textarea> </li > <li> Time: <input type = 'text' class='time' > </li> <button class='send'>Send</button> </ul>");
-            $(".emails").append(appendNode);
-        };
-
         snapshot.forEach(function(snap) {
-            $(".timestamp").text(snap.key());
             console.log(snap.val());
+            var appendParentNode = $("<ul class = 'detials'></ul>");
+            var appendChildTimeNode = $("<div class='timestamp'></div> ");
+            var appendChildSubNode = $("<li> Subject:<input type = 'text ' class='subject' ></li>")
+            var appendChildToNode = $("<li> To: <input type = 'text ' class='to'></li>")
+            var appendChildConNode = $("<li> Content: <textarea class='content'></textarea></li > ")
+            var appendChildClockNode = $("<li> Time: <input type = 'text' class='time'></li> ")
+                // var appendChildButtonNode = $("<button class='send'>Send</button>")
+            $(".emails").append(appendParentNode);
+            appendParentNode.append(appendChildTimeNode);
+            appendParentNode.append(appendChildSubNode);
+            appendParentNode.append(appendChildToNode);
+            appendParentNode.append(appendChildConNode);
+            appendParentNode.append(appendChildClockNode);
+            // appendParentNode.append(appendChildButtonNode);
+            //append
+            appendChildTimeNode.text(snap.key());
+            appendChildSubNode.children('.subject').attr("value", snap.val().Subject);
+            appendChildToNode.children('.to').attr("value", snap.val().To);
+            appendChildConNode.children('.content').text(snap.val().Content);
+            appendChildClockNode.children('.time').attr("value", snap.val().Time);
         });
-
     });
 };
 init();
+
 $("#confirm").click(function() {
     var user = $("#user").val();
     var pass = $("#pass").val();
@@ -33,13 +44,14 @@ $("#confirm").click(function() {
     })
 });
 
-
 $("#add").click(function() {
-    var appendNode = $("<ul class = 'detials'><div class='timestamp'></div> <li> Subject:<input type = 'text ' class= 'subject' ></li> <li> To: <input type = 'text ' class = 'to ' > </li> <li> Content: <textarea class='content ' > </textarea> </li > <li> Time: <input type = 'text' class='time' > </li> <button class='send'>Send</button> </ul>");
+    var appendNode = $("<ul class = 'detials'><div class='timestamp'></div> <li> Subject:<input type = 'text ' class= 'subject' ></li> <li> To: <input type = 'text ' class = 'to ' > </li> <li> Content: <textarea class='content ' > </textarea> </li > <li> Time: <input type = 'text' class='time' > </li> </ul>");
+    var sendButton = $("<button class='send'>Send</button>");
     var timeStamp = showTime();
     $(this).parent("ul").append(appendNode);
+    appendNode.append(sendButton);
     $(this).siblings('ul:last-child').children('.timestamp').text(timeStamp);
-    $(".send").click(function() {
+    sendButton.click(function(event) {
         var creatObj = {};
         var subject = $(this).siblings('li').children('.subject').val();
         var to = $(this).siblings('li').children('.to').val();
@@ -51,6 +63,7 @@ $("#add").click(function() {
             "Content": content,
             "Time": time
         };
+        console.log(refEmail);
         refEmail.update(creatObj);
     });
 });

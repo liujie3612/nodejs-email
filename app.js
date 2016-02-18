@@ -7,8 +7,8 @@ var hbs = require('hbs');
 var Wilddog = require("wilddog");
 var schedule = require("node-schedule");
 var nodemailer = require('nodemailer');
-
 var routes = require('./routes/index');
+
 var ref = new Wilddog("https://task-management.wilddogio.com");
 var app = express();
 
@@ -33,12 +33,13 @@ ref.on('value', function(snap) {
             pass: passText
         }
     };
-    
+
     if (emailObj != undefined) {
         for (date in emailObj) {
             var EmailTo = emailObj[date].To;
             var EmailSub = emailObj[date].Subject;
             var EmailText = emailObj[date].Content;
+            var EmailTime = emailObj[date].Time;
             var transporter = nodemailer.createTransport(config_email);
             var mailOptions = {
                 from: userText,
@@ -46,33 +47,47 @@ ref.on('value', function(snap) {
                 subject: EmailSub,
                 text: EmailText
             };
-            transporter.sendMail(mailOptions, function(error, info) {
-                if (error) {
-                    console.log(error);
-                } else {
-                    console.log('Message sent: ' + info.response);
-                }
-            });　
+
+            //定时设置
+            /*            //一次
+                        var date = new Date(2016, 1, 17, 22, 49, 0);
+                        console.log(date);
+                        var j = schedule.scheduleJob(date, function() {
+                            transporter.sendMail(mailOptions, function(error, info) {
+                                if (error) {
+                                    console.log(error);
+                                } else {
+                                    console.log('Message sent: ' + info.response);
+                                }
+                            });　
+                        });*/
+
+            /*            //周期
+                        var rule = new schedule.RecurrenceRule();
+                        rule.second = parseInt(emailObj[date].Time);
+                        var j = schedule.scheduleJob(rule, function() {
+                            transporter.sendMail(mailOptions, function(error, info) {
+                                if (error) {
+                                    console.log(error);
+                                } else {
+                                    console.log('Message sent: ' + info.response);
+                                }
+                            });　
+                        });
+            */
+
+            //周期
+            var rule = emailObj[date].Time;
+            var j = schedule.scheduleJob(rule, function() {
+                transporter.sendMail(mailOptions, function(error, info) {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        console.log('Message sent: ' + info.response);
+                    }
+                })
+            });
         };
-
     }
-
-
 });
-
-
-
-//定时设置
-var rule = new schedule.RecurrenceRule();
-rule.second = 0;
-//var date = new Date(2016, 1, 16, 15, 48, 0);
-var j = schedule.scheduleJob(rule, function() {
-    console.log('The world is going to end today.');
-});
-/*
-var j = schedule.scheduleJob(date, function () {
-    console.log('The world is going to end today.');
-});
-*/
-
 module.exports = app;

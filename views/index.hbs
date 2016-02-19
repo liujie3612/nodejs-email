@@ -1,20 +1,29 @@
-<div class="main">
-    <ul class="account">
-        <span class="title">Auth:</span>
-        <li>User:
-            <input type="email" id="user">
-        </li>
-        <li>Pass:
-            <input type="password" id="pass">
-        </li>
-        <button id="confirm">Confirm</button>
-    </ul>
+<!DOCTYPE html>
+<html lang="zh">
 
-    <ul class="emails">
-        <span class="title">Emails:</span>
-        <button id="add">Add</button>
-    </ul>
-</div>
-<script type="text/javascript" src="/javascript/jquery.min.js"></script>
-<script src="https://cdn.wilddog.com/js/client/current/wilddog.js"></script>
-<script type="text/javascript" src="/javascript/index.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+     {{>title}}
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="format-detection" content="email=no" />
+    <meta name="format-detection" content="address=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="/styles/index.css">
+</head>
+
+<body>
+    <h1>野狗定时任务管理</h1>
+    <main>
+        <input type="text" name="email" class="email-input" placeholder="邮件地址" autofocus="">
+        <br>
+        <input type="password" name="email" class="pass-input" placeholder="密码" >
+        <br>
+        <button class="index-btn" id="login">登录</button>
+    </main>
+    <script type="text/javascript" src="/javascript/jquery.min.js"></script>
+     <script type="text/javascript" src="/javascript/base64.js"></script>
+    <script src="https://cdn.wilddog.com/js/client/current/wilddog.js"></script>
+    <script type="text/javascript" src="/javascript/index.js"></script> 
+</body>
+</html>

@@ -142,3 +142,17 @@ input {
     margin-left: 51px;
     margin-top: 20px;
 }
+
+main {
+    width: 320px;
+    margin: 0 auto;
+    margin-top: 100px;
+}
+
+.pass-input {
+    margin-top: 20px;
+}
+.index-btn {
+    margin-left: 80px;
+    margin-top: 20px;
+}

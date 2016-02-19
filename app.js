@@ -51,15 +51,18 @@ ref.on('value', function (snap) {
                 subject: EmailSub,
                 text: EmailText
             };
-/*            var j = schedule.scheduleJob(rule, function () {
-                transporter.sendMail(mailOptions, function (error, info) {
-                    if (error) {
-                        console.log(error);
-                    } else {
-                        console.log('Message sent: ' + info.response);
-                    }
-                })
-            })*/
+
+
+            //周期
+/*           var j = schedule.scheduleJob(rule, function () {
+               transporter.sendMail(mailOptions, function (error, info) {
+                   if (error) {
+                       console.log(error);
+                   } else {
+                       console.log('Message sent: ' + info.response + info.messageId + info.envelope + info.accepted + info.rejected + info.pending);
+                   }
+               })
+           })*/
         }
     }
 });

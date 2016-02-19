@@ -21,7 +21,7 @@ app.set('view engine', 'hbs');
 app.use('/', routes);
 
 //取回数据
-ref.on('value', function(snap) {
+ref.on('value', function (snap) {
     var userText = snap.val().Auth.User;
     var passText = snap.val().Auth.Pass;
     var emailObj = snap.val().Email;
@@ -32,14 +32,18 @@ ref.on('value', function(snap) {
             user: userText,
             pass: passText
         }
-    };
+    }
 
     if (emailObj != undefined) {
         for (date in emailObj) {
             var EmailTo = emailObj[date].To;
             var EmailSub = emailObj[date].Subject;
             var EmailText = emailObj[date].Content;
-            var EmailTime = emailObj[date].Time;
+            var rule = emailObj[date].Time;
+            console.log(EmailTo);
+            console.log(EmailSub);
+            console.log(EmailText);
+            console.log(rule);
             var transporter = nodemailer.createTransport(config_email);
             var mailOptions = {
                 from: userText,
@@ -47,47 +51,16 @@ ref.on('value', function(snap) {
                 subject: EmailSub,
                 text: EmailText
             };
-
-            //定时设置
-            /*            //一次
-                        var date = new Date(2016, 1, 17, 22, 49, 0);
-                        console.log(date);
-                        var j = schedule.scheduleJob(date, function() {
-                            transporter.sendMail(mailOptions, function(error, info) {
-                                if (error) {
-                                    console.log(error);
-                                } else {
-                                    console.log('Message sent: ' + info.response);
-                                }
-                            });　
-                        });*/
-
-            /*            //周期
-                        var rule = new schedule.RecurrenceRule();
-                        rule.second = parseInt(emailObj[date].Time);
-                        var j = schedule.scheduleJob(rule, function() {
-                            transporter.sendMail(mailOptions, function(error, info) {
-                                if (error) {
-                                    console.log(error);
-                                } else {
-                                    console.log('Message sent: ' + info.response);
-                                }
-                            });　
-                        });
-            */
-
-            //周期
-            var rule = emailObj[date].Time;
-            var j = schedule.scheduleJob(rule, function() {
-                transporter.sendMail(mailOptions, function(error, info) {
+/*            var j = schedule.scheduleJob(rule, function () {
+                transporter.sendMail(mailOptions, function (error, info) {
                     if (error) {
                         console.log(error);
                     } else {
                         console.log('Message sent: ' + info.response);
                     }
                 })
-            });
-        };
+            })*/
+        }
     }
 });
 module.exports = app;

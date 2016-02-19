@@ -8,6 +8,7 @@ var Wilddog = require("wilddog");
 var schedule = require("node-schedule");
 var nodemailer = require('nodemailer');
 var routes = require('./routes/index');
+var account = require('./routes/account');
 
 var ref = new Wilddog("https://task-management.wilddogio.com");
 var app = express();
@@ -18,10 +19,12 @@ hbs.registerPartials(__dirname + '/views/included');
 app.use(favicon(__dirname + '/public/favicon.ico'));
 
 app.set('view engine', 'hbs');
+
 app.use('/', routes);
+app.use('/account', account);
 
 //取回数据
-ref.on('value', function (snap) {
+ref.on('value', function(snap) {
     var userText = snap.val().Auth.User;
     var passText = snap.val().Auth.Pass;
     var emailObj = snap.val().Email;
@@ -53,15 +56,15 @@ ref.on('value', function (snap) {
                 text: EmailText
             };
             //周期
-/*           var j = schedule.scheduleJob(rule, function () {
-               transporter.sendMail(mailOptions, function (error, info) {
-                   if (error) {
-                       console.log(error);
-                   } else {
-                       console.log('Message sent: ' + info.response + info.messageId + info.envelope + info.accepted + info.rejected + info.pending);
-                   }
-               })
-           })*/
+            /*           var j = schedule.scheduleJob(rule, function () {
+                           transporter.sendMail(mailOptions, function (error, info) {
+                               if (error) {
+                                   console.log(error);
+                               } else {
+                                   console.log('Message sent: ' + info.response + info.messageId + info.envelope + info.accepted + info.rejected + info.pending);
+                               }
+                           })
+                       })*/
         }
     }
 });

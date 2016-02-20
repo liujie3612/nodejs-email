@@ -18,6 +18,7 @@
     };
     var Request = new UrlSearch(); //实例化
     var str_pass = decodeURI(Request.pass);
+    // console.log(str_pass);
     var str_pass_length = str_pass.length;
     var b = new Base64();
     if (str_pass == 'undefined') {
@@ -27,77 +28,76 @@
         for (i = 0; i < str_pass_length; i++) {
             arr.push(str_pass[i]);
         };
-        var urlPass = b.decode(str_pass);
+        urlPass = b.decode(str_pass);
     };
 
+    /*密码处理结束*/
     var ref = new Wilddog("https://task-management.wilddogio.com");
     var uidObj = {}
     var authData = ref.getAuth();
-    var uid = authData.uid.split(':');
-    var uid = uid.join('');
-    var auth_user = authData.password.email;
     console.log(authData);
-    uidObj[uid] = {
-        Auth: {
-            User: auth_user,
-            Pass: urlPass
-        },
-        Email: {
-
-        }
+    var uid = authData.uid.split(':'); //去掉冒号
+    var uid = uid.join(''); //去掉冒号
+    var auth_user = authData.password.email;
+    Auth = {
+        User: auth_user,
+        Pass: urlPass
     }
-    ref.update(uidObj);
+    ref.child(uid).child('Auth').update(Auth);
 
     /***************************************fengexian******************************************/
     var refAuth = new Wilddog("https://task-management.wilddogio.com/" + uid + "/Auth");
     var refEmail = new Wilddog("https://task-management.wilddogio.com/" + uid + "/Email");
+
     //初始化
-    // function init() {
-    refAuth.once('value', function(snap) {
-        $("#user").attr("value", snap.val().User);
-        $("#pass").attr("value", snap.val().Pass);
-    });
-    /*        refEmail.on('value', function(snap) {
-                console.log(snap.val());
-            });*/
-
-    refEmail.once('value', function(snapshot) {
-        console.log(snapshot.val());
-        snapshot.forEach(function(snap) {
-            var appendParentNode = $("<ul class = 'detials'></ul>");
-            var appendChildTimeNode = $("<div class='timestamp'></div> ");
-            var appendChildSubNode = $("<li> Subject:<input type = 'text ' class='subject' ></li>")
-            var appendChildToNode = $("<li> To: <input type = 'email ' class='to'></li>")
-            var appendChildConNode = $("<li> Content: <textarea class='content'></textarea></li > ")
-            var appendChildClockNode = $("<li> Time: <input type = 'text' class='time'></li> ")
-                // var appendChildButtonNode = $("<button class='send'>Send</button>")
-            $(".emails").append(appendParentNode);
-            appendParentNode.append(appendChildTimeNode);
-            appendParentNode.append(appendChildSubNode);
-            appendParentNode.append(appendChildToNode);
-            appendParentNode.append(appendChildConNode);
-            appendParentNode.append(appendChildClockNode);
-            // appendParentNode.append(appendChildButtonNode);
-            //append
-            appendChildTimeNode.text(snap.key());
-            appendChildSubNode.children('.subject').attr("value", snap.val().Subject);
-            appendChildToNode.children('.to').attr("value", snap.val().To);
-            appendChildConNode.children('.content').text(snap.val().Content);
-            appendChildClockNode.children('.time').attr("value", snap.val().Time);
+    function init() {
+        refAuth.once('value', function(snap) {
+            $("#user").attr("value", snap.val().User);
+            $("#pass").attr("value", snap.val().Pass);
         });
+
+        refEmail.once('value', function(snapshot) {
+            snapshot.forEach(function(snap) {
+                var appendParentNode = $("<ul class = 'detials'></ul>");
+                var appendChildTimeNode = $("<div class='timestamp'></div> ");
+                var appendChildSubNode = $("<li> Subject:<input type = 'text ' class='subject' ></li>")
+                var appendChildToNode = $("<li> To: <input type = 'email ' class='to'></li>")
+                var appendChildConNode = $("<li> Content: <textarea class='content'></textarea></li > ")
+                var appendChildClockNode = $("<li> Time: <input type = 'text' class='time'></li> ")
+                var appendChildCloseNode = $("<i class='icon-58 cancel'></i>")
+                    // console.log(snap.key())
+                $(".emails").append(appendParentNode);
+                appendParentNode.append(appendChildTimeNode);
+                appendParentNode.append(appendChildSubNode);
+                appendParentNode.append(appendChildToNode);
+                appendParentNode.append(appendChildConNode);
+                appendParentNode.append(appendChildClockNode);
+                appendParentNode.append(appendChildCloseNode);
+                //append
+                appendChildTimeNode.text(snap.key());
+                appendChildSubNode.children('.subject').attr("value", snap.val().Subject);
+                appendChildToNode.children('.to').attr("value", snap.val().To);
+                appendChildConNode.children('.content').text(snap.val().Content);
+                appendChildClockNode.children('.time').attr("value", snap.val().Time);
+
+                appendChildCloseNode.click(function() {
+                    $(this).parents('.detials').hide();
+                    refEmail.child(snap.key()).remove();
+                });
+            });
+        });
+
+    };
+    init();
+
+    $("#confirm").click(function() {
+        var user = $("#user").val();
+        var pass = $("#pass").val();
+        refAuth.update({
+            "User": user,
+            "Pass": pass
+        })
     });
-
-    // };
-    // init();
-
-    /*    $("#confirm").click(function() {
-            var user = $("#user").val();
-            var pass = $("#pass").val();
-            refAuth.update({
-                "User": user,
-                "Pass": pass
-            })
-        });*/
 
     $("#add").click(function() {
         var appendNode = $("<ul class = 'detials'><div class='timestamp'></div> <li> Subject:<input type = 'text ' class= 'subject' ></li> <li> To: <input type = 'text ' class = 'to'></li><li> Content: <textarea class='content ' > </textarea> </li > <li> Time: <input type = 'text' class='time'></li></ul>");
@@ -120,6 +120,7 @@
                 "Time": time
             };
             refEmail.update(creatObj);
+            window.location.reload(true);
         });
     });
 

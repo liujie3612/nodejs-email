@@ -21,6 +21,11 @@ body {
     color: #666666;
 }
 
+i {
+    font-family: wd-icon;
+    font-style: normal;
+}
+
 .main {
     margin-bottom: 200px;
 }
@@ -47,6 +52,7 @@ h1 {
     text-align: center;
     padding-top: 30px;
     font-weight: 300;
+    margin-bottom: 30px;
 }
 
 button {
@@ -91,11 +97,12 @@ input {
     color: rgb( 51, 51, 51);
 }
 
-.main > ul {
-    margin-left: 200px;
+.main > .emails {
+    margin-left: 470px;
 }
 
 .account {
+    margin: 0 auto;
     margin-bottom: 60px;
     border: 1px solid #ccc;
     width: 44.6%;
@@ -119,6 +126,16 @@ input {
     border: 1px solid #ccc;
     width: 50%;
     border-radius: 6px;
+    position: relative;
+}
+
+.detials .cancel {
+    font-size: 22px;
+    color: #999;
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 10px;
 }
 
 .detials li {
@@ -152,6 +169,7 @@ main {
 .pass-input {
     margin-top: 20px;
 }
+
 .index-btn {
     margin-left: 80px;
     margin-top: 20px;

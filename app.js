@@ -10,7 +10,6 @@ var nodemailer = require('nodemailer');
 var routes = require('./routes/index');
 var email = require('./routes/email');
 var account = require('./routes/account');
-
 var ref = new Wilddog("https://task-management.wilddogio.com");
 var app = express();
 
@@ -38,7 +37,6 @@ ref.on("value", function(snapshot) {
                 pass: passText
             }
         };
-
         if (emailObj != undefined) {
             for (date in emailObj) {
                 var EmailTo = emailObj[date].To;
@@ -52,16 +50,16 @@ ref.on("value", function(snapshot) {
                     subject: EmailSub,
                     text: EmailText
                 };
-                //周期
-                /*           var j = schedule.scheduleJob(rule, function () {
-                               transporter.sendMail(mailOptions, function (error, info) {
-                                   if (error) {
-                                       console.log(error);
-                                   } else {
-                                       console.log('Message sent: ' + info.response + info.messageId + info.envelope + info.accepted + info.rejected + info.pending);
-                                   }
-                               })
-                           })*/
+
+                var j = schedule.scheduleJob(rule, function() {
+                    transporter.sendMail(mailOptions, function(error, info) {
+                        if (error) {
+                            console.log(error);
+                        } else {
+                            console.log('Message sent: ' + info.response + info.messageId + info.envelope + info.accepted + info.rejected);
+                        }
+                    })
+                });
             }
         }
     });

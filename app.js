@@ -36,10 +36,12 @@ var transporter = nodemailer.createTransport(config_email);
 
 ref.on("child_added", function(snapshot) {
     var uid = snapshot.key();
+    console.log(uid);
+    
     ref.child(uid).on("child_added", function(snap) {
         var key = snap.key();
         var val = snap.val();
-        console.log(val)
+        console.log(val);
         var EmailTo = snap.val().To;
         var EmailSub = snap.val().Subject;
         var EmailText = snap.val().Content;
@@ -50,7 +52,7 @@ ref.on("child_added", function(snapshot) {
             subject: EmailSub,
             text: EmailText
         };
-        console.log(mailOptions);
+        // console.log(mailOptions);
         /*        var j = schedule.scheduleJob(rule, function() {
                     transporter.sendMail(mailOptions, function(error, info) {
                         if (error) {

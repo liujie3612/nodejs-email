@@ -14,6 +14,7 @@
     function init() {
         refEmail.once('value', function(snapshot) {
             snapshot.forEach(function(snap) {
+                console.log(snap.val())
                 var appendParentNode = $("<ul class = 'detials'></ul>");
                 var appendChildTimeNode = $("<div class='timestamp'></div> ");
                 var appendChildSubNode = $("<li> Subject:<input type = 'text ' class='subject' ></li>")
@@ -35,7 +36,6 @@
 
                 appendChildCloseNode.click(function() {
                     $(this).parents('.detials').hide();
-                    console.log(snap.key());
                     refEmail.child(snap.key()).remove();
                 });
             });
@@ -43,7 +43,6 @@
 
     };
     init();
-
 
     $("#add").click(function() {
         var appendNode = $("<ul class = 'detials'><div class='timestamp'></div> <li> Subject:<input type = 'text ' class= 'subject' ></li> <li> Content: <textarea class='content ' > </textarea> </li > <li> Time: <input type = 'text' class='time'></li></ul>");

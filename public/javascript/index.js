@@ -19,9 +19,9 @@
             ref.authWithPassword({ email: email, password: pass },
                 function(err, data) {
                     if (err == null) {
-                        var b = new Base64();
-                        var str = b.encode(pass);
-                        window.location.href = "/email/dashbord?pass=" + str;
+/*                        var b = new Base64();
+                        var str = b.encode(pass);*/
+                        window.location.href = "/email/dashbord"
                     } else {
                         alert("请重新核实用户名密码");
                         console.log("auth failed,msg:", err);

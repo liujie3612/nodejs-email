@@ -90,7 +90,7 @@
     };
     init();
 
-    $("#confirm").click(function() {
+/*    $("#confirm").click(function() {
         var user = $("#user").val();
         var pass = $("#pass").val();
         refAuth.update({
@@ -98,7 +98,7 @@
             "Pass": pass
         })
     });
-
+*/
     $("#add").click(function() {
         var appendNode = $("<ul class = 'detials'><div class='timestamp'></div> <li> Subject:<input type = 'text ' class= 'subject' ></li> <li> To: <input type = 'text ' class = 'to'></li><li> Content: <textarea class='content ' > </textarea> </li > <li> Time: <input type = 'text' class='time'></li></ul>");
         var sendButton = $("<button class='send'>Send</button>");

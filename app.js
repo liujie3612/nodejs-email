@@ -28,7 +28,7 @@ ref.on("value", function(snapshot) {
         var userText = snap.val().Auth.User;
         var passText = snap.val().Auth.Pass;
         var emailObj = snap.val().Email;
-        console.log(emailObj);
+        var arrayObj = [];
         var config_email = {
             host: 'smtp.mxhichina.com',
             port: '25',
@@ -39,6 +39,7 @@ ref.on("value", function(snapshot) {
         };
         if (emailObj != undefined) {
             for (date in emailObj) {
+                console.log(emailObj);
                 var EmailTo = emailObj[date].To;
                 var EmailSub = emailObj[date].Subject;
                 var EmailText = emailObj[date].Content;
@@ -51,20 +52,18 @@ ref.on("value", function(snapshot) {
                     text: EmailText
                 };
 
-                var j = schedule.scheduleJob(rule, function() {
-                    transporter.sendMail(mailOptions, function(error, info) {
-                        if (error) {
-                            console.log(error);
-                        } else {
-                            console.log('Message sent: ' + info.response + info.messageId + info.envelope + info.accepted + info.rejected);
-                        }
-                    })
-                });
+                /*                var j = schedule.scheduleJob(rule, function() {
+                                    transporter.sendMail(mailOptions, function(error, info) {
+                                        if (error) {
+                                            console.log(error);
+                                        } else {
+                                            console.log('Message sent: ' + info.response + info.messageId + info.envelope + info.accepted + info.rejected);
+                                        }
+                                    })
+                                });*/
             }
         }
     });
 });
-
-
 
 module.exports = app;

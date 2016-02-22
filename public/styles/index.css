@@ -161,7 +161,7 @@ input {
 }
 
 main {
-    width: 320px;
+    width: 340px;
     margin: 0 auto;
     margin-top: 100px;
 }
@@ -173,4 +173,27 @@ main {
 .index-btn {
     margin-left: 80px;
     margin-top: 20px;
+}
+
+.register {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.register a {
+    font-size: 14px;
+    line-height: 1.5;
+    border-bottom: 1px solid #1e5a8c;
+    text-decoration: none;
+    color: #1e5a8c;
+}
+
+.register a:hover {
+    color: #6da1d3;
+    border-bottom-color: #6da1d3;
+}
+
+p {
+    letter-spacing: 1px;
+    text-align: center;
 }

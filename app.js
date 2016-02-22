@@ -23,7 +23,6 @@ app.use('/', routes);
 app.use('/email', email);
 app.use('/account', account);
 
-
 var config_email = {
     host: 'smtp.mxhichina.com',
     port: '25',
@@ -32,13 +31,15 @@ var config_email = {
         pass: "Abc123456"
     }
 };
-var transporter = nodemailer.createTransport(config_email);
 
+var transporter = nodemailer.createTransport(config_email);
 
 ref.on("child_added", function(snapshot) {
     var uid = snapshot.key();
-
     ref.child(uid).on("child_added", function(snap) {
+        var key = snap.key();
+        var val = snap.val();
+        console.log(val)
         var EmailTo = snap.val().To;
         var EmailSub = snap.val().Subject;
         var EmailText = snap.val().Content;
@@ -62,32 +63,9 @@ ref.on("child_added", function(snapshot) {
         */
     });
 
-
-    ref.child(uid).on("child_added", function(snap) {
-        var EmailTo = snap.val().To;
-        var EmailSub = snap.val().Subject;
-        var EmailText = snap.val().Content;
-        var rule = snap.val().Time;
-        var mailOptions = {
-            from: "tasklist@wilddog.com",
-            to: EmailTo,
-            subject: EmailSub,
-            text: EmailText
-        };
-        console.log(mailOptions);
-        /*        var j = schedule.scheduleJob(rule, function() {
-                    transporter.sendMail(mailOptions, function(error, info) {
-                        if (error) {
-                            console.log(error);
-                        } else {
-                            console.log('Message sent: ' + info.response + info.messageId + info.envelope + info.accepted + info.rejected);
-                        }
-                    })
-                });
-        */
-    });
-
-
+    // ref.child(uid).on("child_removed", function(snap_removed) {
+    //     console.log(snap_removed.val());
+    // });
 });
 
 module.exports = app;

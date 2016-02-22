@@ -35,6 +35,7 @@
 
                 appendChildCloseNode.click(function() {
                     $(this).parents('.detials').hide();
+                    console.log(snap.key());
                     refEmail.child(snap.key()).remove();
                 });
             });

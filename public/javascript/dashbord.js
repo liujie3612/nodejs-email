@@ -40,7 +40,6 @@
                 });
             });
         });
-
     };
     init();
 
@@ -76,7 +75,7 @@
         str += mydate.getDate() + "-";
         str += mydate.getHours() + "-";
         str += mydate.getMinutes() + "-";
-        str += mydate.getSeconds() ;
+        str += mydate.getSeconds();
         return str;
     };
 

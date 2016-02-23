@@ -14,7 +14,7 @@
     function init() {
         refEmail.once('value', function(snapshot) {
             snapshot.forEach(function(snap) {
-                console.log(snap.val())
+                // console.log(snap.val())
                 var appendParentNode = $("<ul class = 'detials'></ul>");
                 var appendChildTimeNode = $("<div class='timestamp'></div> ");
                 var appendChildSubNode = $("<li> Subject:<input type = 'text ' class='subject' ></li>")
@@ -71,12 +71,12 @@
 
     function showTime() {
         var mydate = new Date();
-        var str = "" + mydate.getFullYear() + "年";
-        str += (mydate.getMonth() + 1) + "月";
-        str += mydate.getDate() + "日";
-        str += mydate.getHours() + "时";
-        str += mydate.getMinutes() + "分";
-        str += mydate.getSeconds() + "秒";
+        var str = "" + mydate.getFullYear() + "-";
+        str += (mydate.getMonth() + 1) + "-";
+        str += mydate.getDate() + "-";
+        str += mydate.getHours() + "-";
+        str += mydate.getMinutes() + "-";
+        str += mydate.getSeconds() ;
         return str;
     };
 

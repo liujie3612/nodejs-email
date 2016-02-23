@@ -36,12 +36,10 @@ var transporter = nodemailer.createTransport(config_email);
 
 ref.on("child_added", function(snapshot) {
     var uid = snapshot.key();
-    console.log(uid);
-    
+
     ref.child(uid).on("child_added", function(snap) {
         var key = snap.key();
-        var val = snap.val();
-        console.log(val);
+        // console.log(key);
         var EmailTo = snap.val().To;
         var EmailSub = snap.val().Subject;
         var EmailText = snap.val().Content;
@@ -53,21 +51,30 @@ ref.on("child_added", function(snapshot) {
             text: EmailText
         };
         // console.log(mailOptions);
-        /*        var j = schedule.scheduleJob(rule, function() {
-                    transporter.sendMail(mailOptions, function(error, info) {
-                        if (error) {
-                            console.log(error);
-                        } else {
-                            console.log('Message sent: ' + info.response + info.messageId + info.envelope + info.accepted + info.rejected);
-                        }
-                    })
-                });
-        */
+        var j = schedule.scheduleJob(rule, function() {
+            transporter.sendMail(mailOptions, function(error, info) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Message sent: ' + info.response + info.messageId + info.envelope + info.accepted + info.rejected);
+                }
+            })
+        });
+        ref.child(uid).child(key).on("child_removed", function(snap_removed) {
+            // console.log(key);
+            if (j != null) {
+                j.cancel();
+            }
+            ref.child(uid).child(key).off();
+        });
+
     });
 
-    // ref.child(uid).on("child_removed", function(snap_removed) {
-    //     console.log(snap_removed.val());
-    // });
+});
+
+ref.on("child_removed", function(snapshot_removed) {
+    var uid = snapshot_removed.key();
+    ref.child(uid).off();
 });
 
 module.exports = app;

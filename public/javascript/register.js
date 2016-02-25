@@ -48,7 +48,7 @@
         var myreg = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/
         return myreg.test(email);
     }
-
+    
     function passLength(password) {
         return password.length >= 8;
     }

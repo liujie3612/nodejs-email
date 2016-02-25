@@ -34,10 +34,10 @@ var config_email = {
 
 var transporter = nodemailer.createTransport(config_email);
 
-ref.on("child_added", function (snapshot) {
+ref.on("child_added", function(snapshot) {
     var uid = snapshot.key();
 
-    ref.child(uid).on("child_added", function (snap) {
+    ref.child(uid).on("child_added", function(snap) {
         var key = snap.key();
         // console.log(key);
         var EmailTo = snap.val().To;
@@ -51,7 +51,7 @@ ref.on("child_added", function (snapshot) {
             text: EmailText
         };
         // console.log(mailOptions);
-        var j = schedule.scheduleJob(rule, function () {
+        var j = schedule.scheduleJob(rule, function() {
             /*            transporter.sendMail(mailOptions, function(error, info) {
                             if (error) {
                                 console.log(error);
@@ -59,25 +59,21 @@ ref.on("child_added", function (snapshot) {
                                 console.log('Message sent: ' + info.response + info.messageId + info.envelope + info.accepted + info.rejected);
                             }
                         })*/
-            console.log("当前时间:" + new Date())
+            console.log("当前时间:" + new Date());
         });
 
-        ref.child(uid).child(key).on("child_removed", function (snap_removed) {
+        ref.child(uid).child(key).on("child_removed", function(snap_removed) {
             if (typeof j == "object") {
                 j.cancel()
-                console.log(j)
                 j = undefined
             }
             ref.child(uid).child(key).off();
-            console.log("1")
         })
 
-
-    });
-
+    })
 });
 
-ref.on("child_removed", function (snapshot_removed) {
+ref.on("child_removed", function(snapshot_removed) {
     var uid = snapshot_removed.key();
     ref.child(uid).off();
 });

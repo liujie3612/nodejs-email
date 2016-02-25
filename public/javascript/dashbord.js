@@ -3,8 +3,8 @@
     var ref = new Wilddog("https://task-man.wilddogio.com/");
     var uidObj = {}
     var authData = ref.getAuth();
-    console.log(authData);
-    var uid = authData.uid.split(':'); //去掉冒号
+    // console.log(authData);
+    var uid = authData.uid.split(':'); 
     var uid = uid.join(''); //去掉冒号
     var auth_user = authData.password.email;
 

@@ -7,7 +7,7 @@
     };
 
     $("#login").click(function(event) {
-        var ref = new Wilddog("https://task-management.wilddogio.com/");
+        var ref = new Wilddog("https://task-man.wilddogio.com/");
         var email = $(".email-input").val();
         var pass = $(".pass-input").val();
         console.log(pass.length)

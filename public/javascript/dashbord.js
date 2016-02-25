@@ -1,14 +1,15 @@
 (function() {
     /*密码处理结束*/
-    var ref = new Wilddog("https://task-management.wilddogio.com");
+    var ref = new Wilddog("https://task-man.wilddogio.com/");
     var uidObj = {}
     var authData = ref.getAuth();
+    console.log(authData);
     var uid = authData.uid.split(':'); //去掉冒号
     var uid = uid.join(''); //去掉冒号
     var auth_user = authData.password.email;
 
     /***************************************fengexian******************************************/
-    var refEmail = new Wilddog("https://task-management.wilddogio.com/" + uid);
+    var refEmail = new Wilddog("https://task-man.wilddogio.com/" + uid);
 
     //初始化
     function init() {

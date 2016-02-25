@@ -1,6 +1,6 @@
 (function() {
     $('#register').click(function() {
-        var ref = new Wilddog("https://task-management.wilddogio.com");
+        var ref = new Wilddog("https://task-man.wilddogio.com");
         var email_input = $(".email-input").val();
         var pass_input = $("#pass-input").val();
         var re_pass_input = $("#re-pass-input").val();

@@ -1,28 +1,26 @@
 (function() {
     /*密码处理结束*/
-    var ref = new Wilddog("https://task-man.wilddogio.com/");
+    var ref = new Wilddog("https://task-management.wilddogio.com");
     var uidObj = {}
     var authData = ref.getAuth();
-    // console.log(authData);
-    var uid = authData.uid.split(':'); 
+    var uid = authData.uid.split(':');
     var uid = uid.join(''); //去掉冒号
     var auth_user = authData.password.email;
 
     /***************************************fengexian******************************************/
-    var refEmail = new Wilddog("https://task-man.wilddogio.com/" + uid);
+    var refEmail = new Wilddog("https://task-management.wilddogio.com" + uid);
 
     //初始化
     function init() {
         refEmail.once('value', function(snapshot) {
             snapshot.forEach(function(snap) {
-                // console.log(snap.val())
                 var appendParentNode = $("<ul class = 'detials'></ul>");
                 var appendChildTimeNode = $("<div class='timestamp'></div> ");
                 var appendChildSubNode = $("<li> Subject:<input type = 'text ' class='subject' ></li>")
                 var appendChildConNode = $("<li> Content: <textarea class='content'></textarea></li > ")
                 var appendChildClockNode = $("<li> Time: <input type = 'text' class='time'></li> ")
                 var appendChildCloseNode = $("<i class='icon-58 cancel'></i>")
-                    // console.log(snap.key())
+
                 $(".emails").append(appendParentNode);
                 appendParentNode.append(appendChildTimeNode);
                 appendParentNode.append(appendChildSubNode);

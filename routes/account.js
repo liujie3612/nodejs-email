@@ -9,5 +9,4 @@ router.get('/register', function(req, res, next) {
     res.render('account/register', res.locals);
 });
 
-
 module.exports = router;

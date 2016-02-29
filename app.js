@@ -12,7 +12,7 @@ var nodemailer = require('nodemailer');
 var routes = require('./routes/index');
 var email = require('./routes/email');
 var account = require('./routes/account');
-var ref = new Wilddog("https://task-man.wilddogio.com");
+var ref = new Wilddog("https://task-management.wilddogio.com");
 var app = express();
 
 app.set('views', path.join(__dirname, 'views'));
@@ -49,7 +49,6 @@ ref.on("child_added", function(snapshot) {
 
     ref.child(uid).on("child_added", function(snap) {
         var key = snap.key();
-        // console.log(key);
         var EmailTo = snap.val().To;
         var EmailSub = snap.val().Subject;
         var EmailText = snap.val().Content;
@@ -60,16 +59,15 @@ ref.on("child_added", function(snapshot) {
             subject: EmailSub,
             text: EmailText
         };
-        // console.log(mailOptions);
+
         var j = schedule.scheduleJob(rule, function() {
-            /*            transporter.sendMail(mailOptions, function(error, info) {
-                            if (error) {
-                                console.log(error);
-                            } else {
-                                console.log('Message sent: ' + info.response + info.messageId + info.envelope + info.accepted + info.rejected);
-                            }
-                        })*/
-            console.log("当前时间:" + new Date());
+            transporter.sendMail(mailOptions, function(error, info) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Message sent: ' + info.response + info.messageId + info.envelope + info.accepted + info.rejected);
+                }
+            })
         });
 
         ref.child(uid).child(key).on("child_removed", function(snap_removed) {
